@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import ihm.java.hex.Ihm;
+import ihm.java.hex.Iihm;
+import main.java.hex.Joueur;
 import main.java.hex.Pion;
 import main.java.hex.Plateau;
 
@@ -25,7 +28,10 @@ class PlateauTest {
 	@Test
 	void test() {
 		final int taille = 4;
-		Plateau p = new Plateau(taille);
+		
+		Iihm ihm = new Ihm();
+		
+		Plateau p = new Plateau(taille,ihm);
 		assertEquals(taille, p.taille());
 		assertEquals(
 				" A B C D\n" + 
@@ -57,7 +63,8 @@ class PlateauTest {
 		for (int i = 0; i< taille; ++i)
 			assertEquals(lignes_rep[i], lignes[i]);
 		
-		Plateau p = new Plateau(taille, pos);
+		Iihm ihm = new Ihm();
+		Plateau p = new Plateau(taille, pos, ihm);
 		assertEquals(display_rep, p.toString());
 	}
 

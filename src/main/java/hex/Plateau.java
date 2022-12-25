@@ -1,5 +1,7 @@
 package main.java.hex;
 
+import ihm.java.hex.Iihm;
+
 public class Plateau {
 	private final static int TAILLE_MAX = 26;
 	private final static int NB_JOUEURS = 2;
@@ -11,16 +13,18 @@ public class Plateau {
 	// le second joueur relie la premiere et la derniere colonne
 	
 	private Pion[][] t;
-	private int joueur = 0; // prochain � jouer
+	private Joueur[] j;
+	private int joueurActuelle;
+	private Iihm ihm;
 	
 	private void suivant() {
-		joueur = (joueur +1) % NB_JOUEURS;
+		joueurActuelle = (joueurActuelle +1) % NB_JOUEURS;
 	}
 	
 	public void jouer(String coord) {
 		assert estValide(coord);
 		assert getCase(coord) == Pion.Vide;
-		Pion pion = Pion.values()[joueur];
+		Pion pion = Pion.values()[joueurActuelle];
 		int col = getColonne (coord);
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
@@ -60,16 +64,29 @@ public class Plateau {
 		return coord.charAt(1) - PREMIERE_LIGNE; // ex '2' - '1' == 1
 	}
 
-	public Plateau(int taille) {
+	public Plateau(int taille, Iihm ihm) {
 		assert taille > 0 && taille <= TAILLE_MAX;
 		t = new Pion [taille][taille];
 		
 		for (int lig = 0; lig < taille(); ++lig)
 			for (int col = 0; col < taille(); ++col)
 				t[col][lig] = Pion.Vide;
+		
+		this.ihm = ihm;
+		j = new Joueur[2];
+		
+		for (int i = 0; i < j.length; i++) {
+			j[i] = new Joueur();
+		}
+		
+		ihm.debut(this);
 	}
 	
-	public Plateau(int taille, String pos) {
+	public Joueur[] getJ() {
+		return j;
+	}
+
+	public Plateau(int taille, String pos, Iihm ihm) {
 		assert taille > 0 && taille <= TAILLE_MAX;
 		t = new Pion [taille][taille];
 		
@@ -85,6 +102,9 @@ public class Plateau {
 					getNb(Pion.Croix) != (getNb(Pion.Rond)-1))
 			throw new IllegalArgumentException(
 					"position non valide");
+		
+		this.ihm = ihm;
+		j = new Joueur[2];
 	}
 
 	public int getNb(Pion pion) {
@@ -129,6 +149,11 @@ public class Plateau {
 			lignes[i] = pos.substring(i*taille,
 					(i+1)*taille);
 		return lignes;
+	}
+	
+
+	public int getJoueurActuelle() {
+		return joueurActuelle;
 	}
 
 }
