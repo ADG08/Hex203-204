@@ -19,6 +19,7 @@ public class Plateau {
 	
 	private void suivant() {
 		joueurActuelle = (joueurActuelle +1) % NB_JOUEURS;
+		
 	}
 	
 	public void jouer(String coord) {
@@ -29,6 +30,8 @@ public class Plateau {
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
 		suivant();
+		
+		ihm.afficherPlateau(this);
 	}
 	
 	public static int getTaille(String pos) {
@@ -79,7 +82,7 @@ public class Plateau {
 			j[i] = new Joueur();
 		}
 		
-		ihm.debut(this);
+		ihm.debutJeu(this);
 	}
 	
 	public Joueur[] getJ() {
@@ -105,6 +108,12 @@ public class Plateau {
 		
 		this.ihm = ihm;
 		j = new Joueur[2];
+		
+		for (int i = 0; i < j.length; i++) {
+			j[i] = new Joueur();
+		}
+		
+		ihm.debutJeu(this);
 	}
 
 	public int getNb(Pion pion) {

@@ -12,7 +12,9 @@ public class Main {
 		
 		Plateau p = new Plateau(taille, i);
 		
-		System.out.println(p);
+		while(true) {
+			p.jouer(i.jouer(p));
+		}
 
 	}
 
