@@ -9,6 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		Iihm i = new Ihm();
+    
 		Plateau p = null;
 
 		int x = i.demanderModeDeJeu();
