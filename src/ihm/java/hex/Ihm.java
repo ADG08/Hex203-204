@@ -2,7 +2,7 @@ package ihm.java.hex;
 
 import java.util.Scanner;
 
-import main.java.hex.Plateau;
+import jeu.java.hex.Plateau;
 
 public class Ihm implements Iihm {
 	private final static int TAILLE_MAX = 26;

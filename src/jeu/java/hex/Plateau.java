@@ -1,4 +1,10 @@
-package main.java.hex;
+package jeu.java.hex;
+
+
+import java.util.Random;
+
+import java.util.*;
+
 
 import ihm.java.hex.Iihm;
 
@@ -14,24 +20,53 @@ public class Plateau {
 	
 	private Pion[][] t;
 	private Joueur[] j;
-	private int joueurActuelle;
+	private int joueurActuel;
 	private Iihm ihm;
-	
+	private int dernierPionx;
+	private int dernierPiony;
+
 	private void suivant() {
-		joueurActuelle = (joueurActuelle +1) % NB_JOUEURS;
+		joueurActuel = (joueurActuel +1) % NB_JOUEURS;
 		
 	}
 	
 	public void jouer(String coord) {
 		assert estValide(coord);
 		assert getCase(coord) == Pion.Vide;
-		Pion pion = Pion.values()[joueurActuelle];
+		Pion pion = Pion.values()[joueurActuel];
 		int col = getColonne (coord);
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
-		suivant();
-		
 		ihm.afficherPlateau(this);
+		dernierPionx = getLigne(coord);
+		dernierPiony = getColonne(coord);
+		suivant();
+	}
+	
+	public void jouerIA() {
+		ihm.debutTour(this);
+		
+		
+		int min = 0;
+		int max = taille();
+
+		Random random = new Random();		
+		
+		int x = random.nextInt(max + min) + min;
+		int y = random.nextInt(max + min) + min;
+		Pion pion = Pion.values()[joueurActuel];
+		t[x][y] = pion;
+		
+		ihm.coupIA(this, x, y);
+		
+		
+		suivant();
+		ihm.afficherPlateau(this);
+		
+		
+		
+		
+		
 	}
 	
 	public static int getTaille(String pos) {
@@ -161,8 +196,11 @@ public class Plateau {
 	}
 	
 
-	public int getJoueurActuelle() {
-		return joueurActuelle;
+	public int getJoueurActuel() {
+		return joueurActuel;
+
 	}
+	
 
 }
+
