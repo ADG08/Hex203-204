@@ -2,7 +2,7 @@ package ihm.java.hex;
 
 import java.util.Scanner;
 
-import jeu.java.hex.Plateau;
+import main.java.hex.Plateau;
 
 public class Ihm implements Iihm {
 	private final static int TAILLE_MAX = 26;
@@ -29,7 +29,6 @@ public class Ihm implements Iihm {
 
 	@Override
 	public void afficherPlateau(Plateau p) {
-		System.out.print("\033[H\033[2J");
 		System.out.println(p);
 		
 	}
@@ -81,7 +80,7 @@ public class Ihm implements Iihm {
 	public void coupIA(Plateau p, int x, int y) {
 		System.out.println("L'ia " + p.getJ()[p.getJoueurActuelle()] + " reflechi !!");
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,4 +1,4 @@
-package jeu.java.hex;
+package main.java.hex;
 
 import java.util.Objects;
 

@@ -1,5 +1,7 @@
 package main.java.hex;
 
+import java.util.Random;
+
 import ihm.java.hex.Iihm;
 
 public class Plateau {
@@ -32,6 +34,32 @@ public class Plateau {
 		suivant();
 		
 		ihm.afficherPlateau(this);
+	}
+	
+	public void jouerIA() {
+		ihm.debutTour(this);
+		
+		
+		int min = 0;
+		int max = taille();
+
+		Random random = new Random();		
+		
+		int x = random.nextInt(max + min) + min;
+		int y = random.nextInt(max + min) + min;
+		Pion pion = Pion.values()[joueurActuelle];
+		t[x][y] = pion;
+		
+		ihm.coupIA(this, x, y);
+		
+		
+		suivant();
+		ihm.afficherPlateau(this);
+		
+		
+		
+		
+		
 	}
 	
 	public static int getTaille(String pos) {

@@ -1,6 +1,6 @@
 package ihm.java.hex;
 
-import jeu.java.hex.Plateau;
+import main.java.hex.Plateau;
 
 public interface Iihm {
 	
