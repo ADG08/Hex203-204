@@ -8,15 +8,34 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		final int taille = 4;
 		Iihm i = new Ihm();
-		
-		Plateau p = new Plateau(taille, i);
-		
-		while(p.hasWon()) {
-			p.jouer(i.jouer(p));
+    
+		Plateau p = null;
+
+		int x = i.demanderModeDeJeu();
+		int taille = i.demanderTaille();
+
+			if (x == 1) {
+				p = new Plateau(taille, i);
+
+				while (true) {
+					p.jouer(i.jouer(p));
+				}
+
+			} else if (x == 2) {
+				p = new Plateau(taille, i);
+
+				while (true) {
+					p.jouer(i.jouer(p));
+					p.jouerIA();
+				}
+			} else if (x == 3) {
+				p = new Plateau(taille, i);
+				while (true) {
+					p.jouerIA();
+				}
+			}
+
 		}
 
 	}
-
-}

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import ihm.java.hex.Ihm;
 import ihm.java.hex.Iihm;
-import main.java.hex.Joueur;
 import main.java.hex.Pion;
 import main.java.hex.Plateau;
 
