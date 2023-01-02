@@ -24,7 +24,7 @@ public class Ihm implements Iihm {
 
 	@Override
 	public void debutTour(Plateau p) {
-		System.out.println("A " + p.getJ()[ p.getJoueurActuelle()] + " de jouer");
+		System.out.println("A " + p.getJ()[ p.getJoueurActuel()] + " de jouer");
 	}
 
 	@Override
@@ -78,14 +78,14 @@ public class Ihm implements Iihm {
 
 	@Override
 	public void coupIA(Plateau p, int x, int y) {
-		System.out.println("L'ia " + p.getJ()[p.getJoueurActuelle()] + " reflechi !!");
+		System.out.println("L'ia " + p.getJ()[p.getJoueurActuel()] + " reflechi !!");
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(p.getJ()[p.getJoueurActuelle()] + " viens de jouer a la case : " + getChar(x) + y);
+		System.out.println(p.getJ()[p.getJoueurActuel()] + " viens de jouer a la case : " + getChar(x) + y);
 		
 		
 	}
