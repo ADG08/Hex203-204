@@ -1,7 +1,8 @@
-package main.java.hex;
+package appli.java.hex;
 
 import ihm.java.hex.Ihm;
 import ihm.java.hex.Iihm;
+import main.java.hex.Plateau;
 
 public class Main {
 
