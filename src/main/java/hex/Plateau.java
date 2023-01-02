@@ -1,5 +1,10 @@
 package main.java.hex;
 
+import org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor;
+
+import javafx.util.Pair;
+import java.util.*;
+
 import ihm.java.hex.Iihm;
 
 public class Plateau {
@@ -14,24 +19,23 @@ public class Plateau {
 	
 	private Pion[][] t;
 	private Joueur[] j;
-	private int joueurActuelle;
+	private int joueurActuel;
 	private Iihm ihm;
-	
+
 	private void suivant() {
-		joueurActuelle = (joueurActuelle +1) % NB_JOUEURS;
+		joueurActuel = (joueurActuel +1) % NB_JOUEURS;
 		
 	}
 	
 	public void jouer(String coord) {
 		assert estValide(coord);
 		assert getCase(coord) == Pion.Vide;
-		Pion pion = Pion.values()[joueurActuelle];
+		Pion pion = Pion.values()[joueurActuel];
 		int col = getColonne (coord);
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
-		suivant();
-		
 		ihm.afficherPlateau(this);
+		suivant();
 	}
 	
 	public static int getTaille(String pos) {
@@ -162,7 +166,49 @@ public class Plateau {
 	
 
 	public int getJoueurActuelle() {
-		return joueurActuelle;
+		return joueurActuel;
 	}
-
+public boolean hasWon() {
+        // On utilise un algorithme de recherche en profondeur pour parcourir tous les chemins sur le plateau
+        // depuis un côté du plateau jusqu'à l'autre. Si on trouve un chemin qui relie les deux côtés, alors
+        // le joueur a gagné.
+        Set<Pair<Integer, Integer>> visited = new HashSet<>();
+        final int size = taille();
+        Pion pion = Pion.values()[joueurActuel];
+        for (int i = 0; i < size; i++) {
+            if (dfs(i, 0, pion, visited)) {
+                return true;
+            }
+        }
+        visited.clear();
+        for (int i = 0; i < size; i++) {
+            if (dfs( i, size - 1, pion, visited)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean dfs(int i, int j, Pion pion, Set<Pair<Integer, Integer>> visited) {
+        final int size = taille();
+        if (visited.contains(new Pair<>(i, j))) {
+            return false;
+        }
+        visited.add(new Pair<>(i, j));
+        if (j == 0 || j == size - 1) {
+            return true;
+        }
+        int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {-1, -1}, {1, 1}};
+        for (int[] d : directions) {
+            int ni = i + d[0];
+            int nj = j + d[1];
+            if (ni >= 0 && ni < size && nj >= 0 && nj < size) {
+                if (t[ni][nj] == pion && dfs(ni, nj, pion, visited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
+

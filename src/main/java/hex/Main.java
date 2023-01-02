@@ -12,7 +12,7 @@ public class Main {
 		
 		Plateau p = new Plateau(taille, i);
 		
-		while(true) {
+		while(p.hasWon()) {
 			p.jouer(i.jouer(p));
 		}
 
