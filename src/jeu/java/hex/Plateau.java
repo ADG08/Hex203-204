@@ -1,4 +1,9 @@
-package main.java.hex;
+package jeu.java.hex;
+
+import org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor;
+
+import javafx.util.Pair;
+import java.util.*;
 
 import ihm.java.hex.Iihm;
 
@@ -14,24 +19,27 @@ public class Plateau {
 	
 	private Pion[][] t;
 	private Joueur[] j;
-	private int joueurActuelle;
+	private int joueurActuel;
 	private Iihm ihm;
-	
+	private int dernierPionx;
+	private int dernierPiony;
+
 	private void suivant() {
-		joueurActuelle = (joueurActuelle +1) % NB_JOUEURS;
+		joueurActuel = (joueurActuel +1) % NB_JOUEURS;
 		
 	}
 	
 	public void jouer(String coord) {
 		assert estValide(coord);
 		assert getCase(coord) == Pion.Vide;
-		Pion pion = Pion.values()[joueurActuelle];
+		Pion pion = Pion.values()[joueurActuel];
 		int col = getColonne (coord);
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
-		suivant();
-		
 		ihm.afficherPlateau(this);
+		dernierPionx = getLigne(coord);
+		dernierPiony = getColonne(coord);
+		suivant();
 	}
 	
 	public static int getTaille(String pos) {
@@ -161,8 +169,62 @@ public class Plateau {
 	}
 	
 
-	public int getJoueurActuelle() {
-		return joueurActuelle;
+	public int getJoueurActuel() {
+		return joueurActuel;
 	}
 
+	public boolean hasWon() {
+		String typePionJoueur = Pion.values()[joueurActuel].toString();
+		int[][] pionsJoueur = new int[taille()][taille()];
+		for (int lig = 0; lig < taille(); ++lig)
+            for (int col = 0; col < taille(); ++col)
+                pionsJoueur[col][lig] = 0;
+		pionsJoueur = pionsPlacesParLeJoueur(dernierPionx, dernierPiony, typePionJoueur);
+
+		
+		return false ;
+	} 
+    
+    private boolean VerifCaseAdj(int[][] tab, int x, int y) {
+		if (tab[x][y] == 1){
+			 return true;
+		}
+
+		return false;
+    }
+
+	private int[][] pionsPlacesParLeJoueur(int x, int y, String pion){
+		int[][] tab = new int[taille()][taille()];
+		tab[x][y] = 1;
+
+		int basY = y + 1;
+		int basGaucheX = x +1;
+		int basGaucheY = y +1;
+		int gaucheX = x + 1;
+		int hautY = y - 1;
+		int hautDroitX = x -1;
+		int hautDroitY = y - 1;
+		int droit = x - 1;
+
+		if (basY < taille() && t[x][basY].toString() == pion)
+			tab[x][basY] = 1;
+
+		if (basGaucheX < taille() && basGaucheY < taille() && t[basGaucheX][basGaucheY].toString() == pion)
+			tab[basGaucheX][basGaucheY] = 1;
+
+		if (gaucheX < taille() && t[gaucheX][y].toString() == pion)
+			tab[gaucheX][y] = 1;
+		
+		if (hautY >= 0 && t[x][hautY].toString() == pion)
+			tab[x][hautY] = 1;
+
+		if (hautDroitX >= 0 && hautDroitY >= 0 && t[hautDroitX][hautDroitY].toString() == pion)
+			tab[hautDroitX][hautDroitY] = 1;
+		
+		if (droit >= 0 && t[droit][y].toString() == pion)
+			tab[basGaucheX][basGaucheY] = 1;
+			
+		return tab;
+	}
 }
+

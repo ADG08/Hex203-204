@@ -2,7 +2,7 @@ package ihm.java.hex;
 
 import java.util.Scanner;
 
-import main.java.hex.Plateau;
+import jeu.java.hex.Plateau;
 
 public class Ihm implements Iihm {
 
@@ -23,7 +23,7 @@ public class Ihm implements Iihm {
 
 	@Override
 	public void debutTour(Plateau p) {
-		System.out.println("À " + p.getJ()[p.getJoueurActuelle()] + " de jouer");
+		System.out.println("ï¿½ " + p.getJ()[p.getJoueurActuel()] + " de jouer");
 	}
 
 	@Override

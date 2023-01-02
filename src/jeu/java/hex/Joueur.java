@@ -1,4 +1,4 @@
-package main.java.hex;
+package jeu.java.hex;
 
 public class Joueur {
 

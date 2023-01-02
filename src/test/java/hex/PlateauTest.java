@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import ihm.java.hex.Ihm;
 import ihm.java.hex.Iihm;
-import main.java.hex.Joueur;
-import main.java.hex.Pion;
-import main.java.hex.Plateau;
+import jeu.java.hex.Plateau;
+import jeu.java.hex.Joueur;
+import jeu.java.hex.Pion;
 
 class PlateauTest {
 	private String pos1 = ".X..XOXXOO.OX..."; 
