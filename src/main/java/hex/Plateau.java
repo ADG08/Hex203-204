@@ -21,6 +21,8 @@ public class Plateau {
 	private Joueur[] j;
 	private int joueurActuel;
 	private Iihm ihm;
+	private int dernierPionx;
+	private int dernierPiony;
 
 	private void suivant() {
 		joueurActuel = (joueurActuel +1) % NB_JOUEURS;
@@ -35,6 +37,8 @@ public class Plateau {
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
 		ihm.afficherPlateau(this);
+		dernierPionx = getLigne(coord);
+		dernierPiony = getColonne(coord);
 		suivant();
 	}
 	
@@ -165,50 +169,62 @@ public class Plateau {
 	}
 	
 
-	public int getJoueurActuelle() {
+	public int getJoueurActuel() {
 		return joueurActuel;
 	}
-public boolean hasWon() {
-        // On utilise un algorithme de recherche en profondeur pour parcourir tous les chemins sur le plateau
-        // depuis un côté du plateau jusqu'à l'autre. Si on trouve un chemin qui relie les deux côtés, alors
-        // le joueur a gagné.
-        Set<Pair<Integer, Integer>> visited = new HashSet<>();
-        final int size = taille();
-        Pion pion = Pion.values()[joueurActuel];
-        for (int i = 0; i < size; i++) {
-            if (dfs(i, 0, pion, visited)) {
-                return true;
-            }
-        }
-        visited.clear();
-        for (int i = 0; i < size; i++) {
-            if (dfs( i, size - 1, pion, visited)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
+	public boolean hasWon() {
+		String typePionJoueur = Pion.values()[joueurActuel].toString();
+		int[][] pionsJoueur = new int[taille()][taille()];
+		for (int lig = 0; lig < taille(); ++lig)
+            for (int col = 0; col < taille(); ++col)
+                pionsJoueur[col][lig] = 0;
+		pionsJoueur = pionsPlacesParLeJoueur(dernierPionx, dernierPiony, typePionJoueur);
+
+		
+		return false ;
+	} 
     
-    private boolean dfs(int i, int j, Pion pion, Set<Pair<Integer, Integer>> visited) {
-        final int size = taille();
-        if (visited.contains(new Pair<>(i, j))) {
-            return false;
-        }
-        visited.add(new Pair<>(i, j));
-        if (j == 0 || j == size - 1) {
-            return true;
-        }
-        int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {-1, -1}, {1, 1}};
-        for (int[] d : directions) {
-            int ni = i + d[0];
-            int nj = j + d[1];
-            if (ni >= 0 && ni < size && nj >= 0 && nj < size) {
-                if (t[ni][nj] == pion && dfs(ni, nj, pion, visited)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    private boolean VerifCaseAdj(int[][] tab, int x, int y) {
+		if (tab[x][y] == 1){
+			 return true;
+		}
+
+		return false;
     }
+
+	private int[][] pionsPlacesParLeJoueur(int x, int y, String pion){
+		int[][] tab = new int[taille()][taille()];
+		tab[x][y] = 1;
+
+		int basY = y + 1;
+		int basGaucheX = x +1;
+		int basGaucheY = y +1;
+		int gaucheX = x + 1;
+		int hautY = y - 1;
+		int hautDroitX = x -1;
+		int hautDroitY = y - 1;
+		int droit = x - 1;
+
+		if (basY < taille() && t[x][basY].toString() == pion)
+			tab[x][basY] = 1;
+
+		if (basGaucheX < taille() && basGaucheY < taille() && t[basGaucheX][basGaucheY].toString() == pion)
+			tab[basGaucheX][basGaucheY] = 1;
+
+		if (gaucheX < taille() && t[gaucheX][y].toString() == pion)
+			tab[gaucheX][y] = 1;
+		
+		if (hautY >= 0 && t[x][hautY].toString() == pion)
+			tab[x][hautY] = 1;
+
+		if (hautDroitX >= 0 && hautDroitY >= 0 && t[hautDroitX][hautDroitY].toString() == pion)
+			tab[hautDroitX][hautDroitY] = 1;
+		
+		if (droit >= 0 && t[droit][y].toString() == pion)
+			tab[basGaucheX][basGaucheY] = 1;
+			
+		return tab;
+	}
 }
 
