@@ -32,7 +32,13 @@ public class Plateau {
 	
 	public void jouer(String coord) {
 		assert estValide(coord);
-		assert getCase(coord) == Pion.Vide;
+		if (getCase(coord) != Pion.Vide) {
+			System.out.println("Vous ne pouvez pas posez votre pion en : " + coord);
+			return;
+			
+		}
+		
+		
 		Pion pion = Pion.values()[joueurActuel];
 		int col = getColonne (coord);
 		int lig = getLigne(coord);
