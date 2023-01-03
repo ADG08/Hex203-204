@@ -1,7 +1,6 @@
 package jeu.java.hex;
 
 import java.util.Random;
-import java.util.*;
 
 import ihm.java.hex.Iihm;
 
@@ -19,9 +18,6 @@ public class Plateau {
 	private Joueur[] j;
 	private int joueurActuel;
 	private Iihm ihm;
-	private int x;
-	private int y;
-
 	private void suivant() {
 		joueurActuel = (joueurActuel +1) % NB_JOUEURS;
 		
@@ -41,8 +37,6 @@ public class Plateau {
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
 		ihm.afficherPlateau(this);
-		x = getColonne(coord);
-		y = getLigne(coord);
 		hasWon();
 		suivant();
 	}
