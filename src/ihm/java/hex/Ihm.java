@@ -86,14 +86,15 @@ public class Ihm implements Iihm {
 			e.printStackTrace();
 		}
 		System.out.println(p.getJ()[p.getJoueurActuel()] + " viens de jouer a la case : " + getChar(x) + y);
-		
-		
+		p.hasWon();
 	}
 	
 	public static char getChar(int i) {
 	    return i<0 || i>25 ? '?' : (char)('A' + i);
 	}
 
-
+	public void fin(Plateau p, int gagnant) {
+		System.out.println(p.getJ()[gagnant] + " a gagne !");
+	}
 
 }

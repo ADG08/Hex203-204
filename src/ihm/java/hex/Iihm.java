@@ -17,4 +17,6 @@ public interface Iihm {
 	public void coupIA(Plateau p, int x, int y);
 	
 	public String jouer(Plateau p);
+
+	public void fin(Plateau p, int gagnant);
 }
