@@ -11,4 +11,6 @@ public interface Iihm {
 	public void afficherPlateau(Plateau p);
 	
 	public String jouer(Plateau p);
+
+	public void fin(Plateau p);
 }

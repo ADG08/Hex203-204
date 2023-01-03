@@ -42,4 +42,9 @@ public class Ihm implements Iihm {
 		return null;
 	}
 
+	@Override
+	public void fin(Plateau p) {
+		System.out.println(p.getJ()[p.getJoueurActuel()] + " a gagne");
+	}
+
 }

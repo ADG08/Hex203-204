@@ -13,10 +13,13 @@ public class Main {
 		
 		Plateau p = new Plateau(taille, i);
 		
-		while(p.hasWon()) {
+		while(!p.hasWon()) {
 			p.jouer(i.jouer(p));
 		}
 
+		if (p.hasWon()){
+			i.fin(p);
+		}
 	}
 
 }

@@ -1,10 +1,4 @@
 package jeu.java.hex;
-
-import org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor;
-
-import javafx.util.Pair;
-import java.util.*;
-
 import ihm.java.hex.Iihm;
 
 public class Plateau {
@@ -21,8 +15,8 @@ public class Plateau {
 	private Joueur[] j;
 	private int joueurActuel;
 	private Iihm ihm;
-	private int dernierPionx;
-	private int dernierPiony;
+	private int x;
+	private int y;
 
 	private void suivant() {
 		joueurActuel = (joueurActuel +1) % NB_JOUEURS;
@@ -37,8 +31,9 @@ public class Plateau {
 		int lig = getLigne(coord);
 		t[col][lig] = pion;
 		ihm.afficherPlateau(this);
-		dernierPionx = getLigne(coord);
-		dernierPiony = getColonne(coord);
+		x = getColonne(coord);
+		y = getLigne(coord);
+		hasWon();
 		suivant();
 	}
 	
@@ -175,25 +170,127 @@ public class Plateau {
 
 	public boolean hasWon() {
 		String typePionJoueur = Pion.values()[joueurActuel].toString();
-		int[][] pionsJoueur = new int[taille()][taille()];
-		for (int lig = 0; lig < taille(); ++lig)
-            for (int col = 0; col < taille(); ++col)
-                pionsJoueur[col][lig] = 0;
-		pionsJoueur = pionsPlacesParLeJoueur(dernierPionx, dernierPiony, typePionJoueur);
+		int nbPions1ereligne = 0;
+		int nbPionslastligne = 0;
 
-		
-		return false ;
-	} 
-    
-    private boolean VerifCaseAdj(int[][] tab, int x, int y) {
-		if (tab[x][y] == 1){
-			 return true;
+		if (typePionJoueur.equals("X")){
+			for (int i = 0; i < taille(); i++){
+				if (typePionJoueur.equals(t[i][0].toString())){
+					nbPions1ereligne++;
+				}
+				if (typePionJoueur.equals(t[i][taille() - 1].toString())){
+					nbPionslastligne++;
+				}
+			}
+	
+			if (nbPions1ereligne > 0 && nbPionslastligne > 0){
+				if (asAdjacent(x, y, typePionJoueur)){
+					return true;
+				}else{
+					return false;
+				}
+	
+			}else {
+				return false ;
+			}
+		}else if(typePionJoueur.equals("O")){
+			for (int i = 0; i < taille(); i++){
+				if (typePionJoueur.equals(t[0][i].toString())){
+					nbPions1ereligne++;
+				}
+				if (typePionJoueur.equals(t[taille() - 1][i].toString())){
+					nbPionslastligne++;
+				}
+			}
+	
+			if (nbPions1ereligne > 0 && nbPionslastligne > 0){
+				if (asAdjacent(x, y, typePionJoueur)){
+					return true;
+				}else{
+					return false;
+				}
+	
+			}else {
+				return false ;
+			}
 		}
 
 		return false;
-    }
+	} 
 
-	private int[][] pionsPlacesParLeJoueur(int x, int y, String pion){
+	private boolean asAdjacent(int x, int y, String pion){
+		int basY = y + 1;
+		int basGaucheX = x - 1;
+		int basGaucheY = y + 1;
+		int gaucheX =  x - 1;
+		int hautY = y - 1;
+		int hautDroitX = x + 1;
+		int hautDroitY = y - 1;
+		int droit = x + 1;
+
+
+		if (pion.equals("X")){
+			if (y == taille() - 1){
+				return true;
+			}
+		}
+		
+		if (pion.equals("O")){
+			if (x == taille() - 1){
+				return true;
+			}
+		}
+
+
+		if (basY < taille() && pion.equals(t[x][basY].toString()))
+			asAdjacent(x, basY, pion);
+
+		if (basGaucheX >= 0 && basGaucheY < taille() && pion.equals(t[basGaucheX][basGaucheY].toString()))
+			asAdjacent(basGaucheX, basGaucheY, pion);
+
+		if (gaucheX >= 0 && pion.equals(t[gaucheX][y].toString()))
+			asAdjacent(gaucheX, y, pion);
+
+		if (hautY >= 0 && pion.equals(t[x][hautY].toString()))
+			asAdjacent(x, hautY, pion);
+
+		if (hautDroitX < taille() && hautDroitY >= 0 && pion.equals(t[hautDroitX][hautDroitY].toString()))
+			asAdjacent(hautDroitX, hautDroitY, pion);
+
+		if (droit >= 0 && pion.equals(t[droit][y].toString()))
+			asAdjacent(droit, y, pion);
+
+		return false;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*private int[][] pionsPlacesParLeJoueur(int x, int y, String pion){
 		int[][] tab = new int[taille()][taille()];
 		tab[x][y] = 1;
 
@@ -225,6 +322,21 @@ public class Plateau {
 			tab[basGaucheX][basGaucheY] = 1;
 			
 		return tab;
-	}
+	}*/
 }
 
+/*int[][] visite = new int[taille()][taille()];
+		for (int lig = 0; lig < taille(); ++lig)
+			for (int col = 0; col < taille(); ++col)
+				visite[col][lig] = 0;
+
+
+		
+		for (int lig = 0; lig < taille(); ++lig){
+			for (int col = 0; col < taille(); ++col){
+				if (pion.equals(t[col][lig].toString())){
+					visite[col][lig] = 1;
+
+				}
+			}
+		}*/
