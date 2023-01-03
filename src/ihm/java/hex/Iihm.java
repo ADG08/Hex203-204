@@ -12,5 +12,5 @@ public interface Iihm {
 	
 	public String jouer(Plateau p);
 
-	public void fin(Plateau p);
+	public void fin(Plateau p, int gagnant);
 }

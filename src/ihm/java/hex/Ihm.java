@@ -23,7 +23,7 @@ public class Ihm implements Iihm {
 
 	@Override
 	public void debutTour(Plateau p) {
-		System.out.println("� " + p.getJ()[p.getJoueurActuel()] + " de jouer");
+		System.out.println("A " + p.getJ()[p.getJoueurActuel()] + " de jouer");
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class Ihm implements Iihm {
 	}
 
 	@Override
-	public void fin(Plateau p) {
-		System.out.println(p.getJ()[p.getJoueurActuel()] + " a gagne");
+	public void fin(Plateau p, int gagnant) {
+		System.out.println(p.getJ()[gagnant] + " a gagne !");
 	}
 
 }

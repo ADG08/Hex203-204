@@ -16,10 +16,6 @@ public class Main {
 		while(!p.hasWon()) {
 			p.jouer(i.jouer(p));
 		}
-
-		if (p.hasWon()){
-			i.fin(p);
-		}
 	}
 
 }
