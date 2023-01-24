@@ -1,5 +1,7 @@
 # hex203-204
  Membres de l'équipe : Sofia Hazami, André Domingues Ramos, Babylone Isshak, Eric Ye (203)
+ 
+ MZ: Note 13/20 au groupe. La note de l'exo du DST ne sera prise en compte que si elle est supérieure donc cette note ne peut pas baisser.
 
 
 Dans ce projet, ce qui a été réussi est : tout ce qui constitue le jeu, c'est-à-dire, son plateau, ses pions, ses joueurs. Ansi que le déroulement du jeu, à savoir: la victoire ou non du joueur.
